@@ -15,9 +15,7 @@ from typing import Tuple, Dict, Any
  
 
 
-def training_step(model: torch.nn.Module, train_dataloader: torch.utils.data.DataLoader, 
-                 optimizer: torch.optim.Optimizer, scheduler: torch.optim.lr_scheduler._LRScheduler, 
-                 device: torch.device, loss_fn: torch.nn.Module, logger: logging.Logger) -> float:
+def training_step(model, train_dataloader, optimizer, scheduler, device, loss_fn, logger ) -> float:
     """
     Perform one training epoch
     
@@ -94,8 +92,7 @@ def training_step(model: torch.nn.Module, train_dataloader: torch.utils.data.Dat
     return avg_loss
 
 
-def eval_step(model: torch.nn.Module, device: torch.device, test_loader: torch.utils.data.DataLoader, 
-             criterion: torch.nn.Module, text_transform: TextTransform, logger: logging.Logger) -> Tuple[float, float]:
+def eval_step(model, device , test_loader, criterion, text_transform , logger ) -> Tuple[float, float]:
     """
     Evaluate model on test set
     
@@ -173,12 +170,7 @@ def eval_step(model: torch.nn.Module, device: torch.device, test_loader: torch.u
     return avg_loss, avg_wer
 
 
-
-
-def train_full_pipeline(model: torch.nn.Module, train_dataloader: torch.utils.data.DataLoader,
-                       eval_dataloader: torch.utils.data.DataLoader, device: torch.device,
-                       text_transform: TextTransform, epochs: int = 10, lr: float = 1e-3,
-                       output_dir: str = "./nacasr_model", logger: logging.Logger = None) -> Dict[str, Any]:
+def train_full_pipeline(model, train_dataloader,eval_dataloader , device,text_transform, epochs: int = 10, lr: float = 1e-3, output_dir: str = "./nacasr_model", logger: logging.Logger = None) -> Dict[str, Any]:
     """
     Complete training pipeline
     
