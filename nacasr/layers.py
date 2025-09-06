@@ -1,9 +1,11 @@
 import torch 
 import torch.nn as nn
+import torch.nn.functional as F
+from torch.nn import CTCLoss
 
 from dataset import get_dataloader
 
-import torch.nn.functional as F
+
 
 
 
@@ -158,10 +160,17 @@ if __name__ == "__main__":
     model.eval()
     for batch in dataloader:
         input_values = batch["input_values"]
-        print(f"input values shape: {input_values.shape}")
-        out = model(input_values)
-        print(f"model output shape: {out.shape}")
-        break
+        labels = batch["labels"]
 
-   
-    
+        input_lengths = (input_values != 0).sum(-1)
+
+        print(input_lengths)
+        labels_lengths = (labels != -100).sum(-1)
+        ouputts = model(input_values)
+
+        log_probs = F.log_softmax(ouputts, dim=-1).transpose(0, 1)  # (T, B, C)
+        loss_fn = CTCLoss(blank=0, zero_infinity=True)
+        loss = loss_fn(log_probs, labels, input_lengths, labels_lengths)
+
+        print(f"Loss: {loss.item()}")        
+        break
