@@ -1,0 +1,10 @@
+logs*
+logs/
+nacasr_model/*
+nacasr_model*
+
+modeling_nacasr.py
+modeling_nacasr2.py
+
+
+README.MD

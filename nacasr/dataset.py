@@ -104,6 +104,9 @@ class TextTransform:
         for i in labels:
             string.append(self.index_map[i])
         return "".join(string)
+    
+    def vocab_size(self):
+        return len(self.vocab)
 
 
 class NACDataset(Dataset):
