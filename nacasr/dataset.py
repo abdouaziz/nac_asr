@@ -180,10 +180,3 @@ def get_dataloader(path_or_name, batch_size=8, shuffle=True, num_workers=0):
         )
     except Exception as e:
         raise DatasetError(f"Error from creation of dataloader: {e}")
-
-
-# if __name__ == "__main__":
-#     dataloader = get_dataloader("abdouaziiz/new_benchmark_wolof", batch_size=2, num_workers=4)
-#     for batch in dataloader:
-#         print(batch)
-#         break
