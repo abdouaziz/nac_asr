@@ -94,37 +94,16 @@ python run_nacasr_ctc.py --epochs 20 --batch-size 16 --lr 1e-3
 | w/o Conv1D Banks | XX.X | +X.X |
 | w/o Prenet | XX.X | +X.X |
 
- 
- 
 
- 
- 
 ## Contributing
 
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Development Setup
-
-```bash
-# Install development dependencies
-pip install -r requirements-dev.txt
-
-# Run tests
-python -m pytest tests/
-
-# Code formatting
-black . && isort . && flake8 .
-```
 
 ### Issues and Pull Requests
 
 - 🐛 **Bug Reports**: Use the bug report template
 - 💡 **Feature Requests**: Use the feature request template  
 - 🔧 **Pull Requests**: Follow the PR template and ensure tests pass
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
@@ -141,8 +120,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-- **Author**: [abdouaziz@gmail.com] ([your.email@institution.edu])
-- **Lab/Institution**: [LAfricaMobile]
+- **Author**: [abdouaziz@gmail.com] ([abdouaziz@gmail.com])
+- **Lab/Institution**: LAfricaMobile
 - **Project Page**: [https://github.com/abdouaziz/nac_asr](https://github.com/abdouaziz/nac_asr)
 
 ---
