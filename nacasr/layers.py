@@ -1,10 +1,9 @@
-import torch 
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn import CTCLoss
 
 from nacasr.dataset import get_dataloader
-
 
 
 class Prenet(nn.Module):
@@ -26,7 +25,9 @@ class Prenet(nn.Module):
 
 
 class BatchNormConv1d(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size, stride, padding, activation=None):
+    def __init__(
+        self, in_channels, out_channels, kernel_size, stride, padding, activation=None
+    ):
         super(BatchNormConv1d, self).__init__()
         self.conv1d = nn.Conv1d(in_channels, out_channels, kernel_size, stride, padding)
         self.bnorm = nn.BatchNorm1d(out_channels)
@@ -127,7 +128,9 @@ class CBHG(nn.Module):
             x = highway(x)
 
         if input_lengths is not None:
-            x = nn.utils.rnn.pack_padded_sequence(x, input_lengths, batch_first=True ,enforce_sorted=False)
+            x = nn.utils.rnn.pack_padded_sequence(
+                x, input_lengths, batch_first=True, enforce_sorted=False
+            )
 
         # (B, T_in, in_dim*2)
         outputs, _ = self.gru(x)
@@ -148,9 +151,9 @@ class NACASR(nn.Module):
         x = self.cbhg(inputs, input_lengths)
         x = self.linear(x)
         return x
-    
 
-def compute_input_lengths(input_values ,in_dim:int= 256):
+
+def compute_input_lengths(input_values, in_dim: int = 256):
     """Compute actual sequence lengths from input tensor."""
     if len(input_values.shape) == 3:
         if input_values.shape[-1] == in_dim:  # (batch, seq_len, in_dim)
@@ -160,17 +163,16 @@ def compute_input_lengths(input_values ,in_dim:int= 256):
             lengths = (input_values.abs().sum(1) > 0).sum(-1)
     else:  # 2D input
         lengths = torch.full((input_values.shape[0],), input_values.shape[1])
-    
+
     return lengths.long()
 
- 
 
 # if __name__ == "__main__":
 #     dataloader = get_dataloader("abdouaziiz/new_benchmark_wolof", batch_size=2)
 
 #     model = NACASR(in_dim=256, vocab_size=30)
 #     model.eval()
-    
+
 #     for batch in dataloader:
 #         input_values = batch["input_values"]
 #         labels = batch["labels"]
@@ -178,20 +180,19 @@ def compute_input_lengths(input_values ,in_dim:int= 256):
 #         input_lengths = compute_input_lengths(input_values, in_dim=256)
 
 #         labels_lengths = (labels != -100).sum(-1)
-        
+
 #         # Forward pass
 #         outputs = model(input_values)
-      
+
 #         actual_output_lengths = torch.full((outputs.shape[0],), outputs.shape[1], dtype=torch.long)
-        
+
 #         # Prepare for CTC loss: (T, B, C)
 #         log_probs = F.log_softmax(outputs, dim=-1).transpose(0, 1)
-        
+
 #         # CTC Loss
 #         loss_fn = CTCLoss(blank=0, zero_infinity=True)
-        
+
 #         # Use actual output lengths instead of input lengths for CTC
 #         loss = loss_fn(log_probs, labels, actual_output_lengths, labels_lengths)
 
-#         print(f"Loss: {loss.item()}")        
-        
+#         print(f"Loss: {loss.item()}")

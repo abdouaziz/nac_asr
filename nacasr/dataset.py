@@ -9,8 +9,6 @@ import librosa
 from datasets import load_dataset, Audio
 
 
-
-
 class DatasetError(Exception):
     pass
 
@@ -48,9 +46,9 @@ class CNNEncoder(nn.Module):
         x = (x - x.mean(dim=-1, keepdim=True)) / (x.std(dim=-1, keepdim=True) + 1e-8)
 
         for layer in self.layers:
-            x = layer(x)   
-            x = self.layer_norm(x.transpose(1, 2)).transpose(1, 2)  
-            x = self.gelu(x)  
+            x = layer(x)
+            x = self.layer_norm(x.transpose(1, 2)).transpose(1, 2)
+            x = self.gelu(x)
 
         return x
 
@@ -75,8 +73,8 @@ class FeaturesExtractor(nn.Module):
 
 
 class TextTransform:
-    def __init__(self, path_or_name ,split="train"):
-        ds = load_dataset(path_or_name ,split=split)
+    def __init__(self, path_or_name, split="train"):
+        ds = load_dataset(path_or_name, split=split)
         ds = ds.cast_column("audio", Audio())
         self.vocab = " "
         for item in ds["train"]["transcription"]:
@@ -104,22 +102,21 @@ class TextTransform:
         for i in labels:
             string.append(self.index_map[i])
         return "".join(string)
-    
+
     def vocab_size(self):
         return len(self.vocab)
 
 
 class NACDataset(Dataset):
-    def __init__(self, path_or_name , split="train"):
-        self.ds = load_dataset(path_or_name ,split=split)
+    def __init__(self, path_or_name, split="train"):
+        self.ds = load_dataset(path_or_name, split=split)
         self.ds = self.ds.cast_column("audio", Audio())
-        self.text_transform = TextTransform(path_or_name ,split=split)
+        self.text_transform = TextTransform(path_or_name, split=split)
         self.feature_extractor = FeaturesExtractor()
         self.feature_extractor.eval()
 
         self.ds = self.ds.map(self.audioPreprocessor, num_proc=4)
 
-   
     @staticmethod
     def audioPreprocessor(batch):
 
@@ -175,7 +172,7 @@ def get_dataloader(path_or_name, batch_size=8, shuffle=True, num_workers=0):
             batch_size=batch_size,
             shuffle=shuffle,
             collate_fn=_collate_fn,
-            num_workers=num_workers, 
+            num_workers=num_workers,
         )
     except Exception as e:
         raise DatasetError(f"Error from creation of dataloader: {e}")
