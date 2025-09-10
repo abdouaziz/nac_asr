@@ -75,8 +75,8 @@ class FeaturesExtractor(nn.Module):
 
 
 class TextTransform:
-    def __init__(self, path_or_name):
-        ds = load_dataset(path_or_name)
+    def __init__(self, path_or_name ,split="train"):
+        ds = load_dataset(path_or_name ,split=split)
         ds = ds.cast_column("audio", Audio())
         self.vocab = " "
         for item in ds["train"]["transcription"]:
@@ -110,17 +110,16 @@ class TextTransform:
 
 
 class NACDataset(Dataset):
-    def __init__(self, path_or_name):
-        self.ds = load_dataset(path_or_name)
+    def __init__(self, path_or_name , split="train"):
+        self.ds = load_dataset(path_or_name ,split=split)
         self.ds = self.ds.cast_column("audio", Audio())
-        self.text_transform = TextTransform(path_or_name)
+        self.text_transform = TextTransform(path_or_name ,split=split)
         self.feature_extractor = FeaturesExtractor()
         self.feature_extractor.eval()
 
         self.ds = self.ds.map(self.audioPreprocessor, num_proc=4)
 
-        self.samples = self.ds["train"]
-
+   
     @staticmethod
     def audioPreprocessor(batch):
 
@@ -137,12 +136,12 @@ class NACDataset(Dataset):
         return batch
 
     def __len__(self):
-        return len(self.samples)
+        return len(self.ds)
 
     def __getitem__(self, idx):
         # Get discrete audio features
-        audio = self.samples[idx]["audio"]["array"]
-        transcription = self.samples[idx]["transcription"].lower()
+        audio = self.ds[idx]["audio"]["array"]
+        transcription = self.ds[idx]["transcription"].lower()
 
         transcription = self.text_transform.text_to_int(transcription)
 

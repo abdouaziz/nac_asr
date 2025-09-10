@@ -9,7 +9,20 @@ import torch.nn.functional as F
 from nacasr import train_full_pipeline
 import torch.nn as nn
 from torch.nn import CTCLoss
+from typing import List , Tuple , fil
 
+from dataclasses import dataclass, field
+from typing import Optional, Union
+
+
+
+
+
+@dataclass
+class TrainingArguments:
+    path_or_ame: str = field(
+        metadata={"help": "Path to pretrained model or model identifier from huggingface.co/models"}
+    )
 
 
 def main():
@@ -61,27 +74,7 @@ def main():
         logger.info(f"Sample input shape: {input_values.shape}")
         logger.info(f"Sample labels shape: {labels.shape}")
         
-        with torch.no_grad():
-            input_lengths = compute_input_lengths(input_values)
-            
-            if len(input_values.shape) == 3 and input_values.shape[-1] != 256:
-                input_values = input_values.transpose(1, 2)
-            
-            outputs = model(input_values)
-            logger.info(f"Sample output shape: {outputs.shape}")
-            
-            # Test loss computation
-            targets, target_lengths = prepare_ctc_targets(labels, device)
-            log_probs = F.log_softmax(outputs, dim=-1).transpose(0, 1)
-            
-           
-            
-            loss_fn = CTCLoss(blank=0, zero_infinity=True)
-            loss = loss_fn(log_probs, targets, input_lengths, target_lengths)
-            logger.info(f"Sample loss: {loss.item():.4f}")
-        
-        logger.info("Model test completed successfully!")
-        
+  
         # Start full training
         training_stats = train_full_pipeline(
             model=model,
