@@ -107,16 +107,6 @@ python run_nacasr.py \
 | w/o Prenet | XX.X | +X.X |
 
 
-## Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Issues and Pull Requests
-
-- 🐛 **Bug Reports**: Use the bug report template
-- 💡 **Feature Requests**: Use the feature request template  
-- 🔧 **Pull Requests**: Follow the PR template and ensure tests pass
-
 ## Acknowledgments
 
 - **Dataset**: Thanks to the creators of the Wolof speech corpus
