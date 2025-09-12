@@ -75,8 +75,15 @@ pip install -r requirements.txt
 
 ```bash
  
-# Full training with default parameters
-python run_nacasr_ctc.py --epochs 20 --batch-size 16 --lr 1e-3
+python run_nacasr.py \
+  --path_or_name abdouaziiz/new_benchmark_wolof \
+  --batch_size 16 \
+  --num_workers 8 \
+  --n_epochs 20 \
+  --lr 0.0005 \
+  --output_dir ./models/wolof \
+  --log_file training_wolof.log \
+  --in_dim 512
 
  
 ```
