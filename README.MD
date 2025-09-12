@@ -125,7 +125,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ## Contact
 
-- **Author**: [abdouaziz@gmail.com] ([abdouaziz@gmail.com])
+- **Author**: abdouaziz@gmail.com
 - **Lab/Institution**: LAfricaMobile
 - **Project Page**: [https://github.com/abdouaziz/nac_asr](https://github.com/abdouaziz/nac_asr)
 
