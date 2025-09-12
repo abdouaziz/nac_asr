@@ -107,13 +107,6 @@ python run_nacasr.py \
 | w/o Prenet | XX.X | +X.X |
 
 
-## Acknowledgments
-
-- **Dataset**: Thanks to the creators of the Wolof speech corpus
-- **Architecture**: CBHG module inspired by Tacotron (Wang et al., 2017)
-- **CTC Loss**: Connectionist Temporal Classification (Graves et al., 2006)
-- **Funding**: [Grant/Institution acknowledgments]
-
 ## Related Work
 
 - [Tacotron: Towards End-to-End Speech Synthesis](https://arxiv.org/abs/1703.10135)
