@@ -17,6 +17,12 @@ NACASR (Neural Acoustic-to-Character Automatic Speech Recognition) is an end-to-
 
 ## Architecture Overview
 
+
+<div align="center">
+  <img src="https://media.licdn.com/dms/image/v2/D4E22AQHVVT5s1ABhYQ/feedshare-shrink_2048_1536/B4EZjrpp.1HgA0-/0/1756300223754?e=1760572800&v=beta&t=YHaDsjS7qrNhcUwOXJ_MaRhs_EwkgkTLt0iBU2GnduI" alt="Architecture" width="600"/>
+</div>
+
+
 ```
 Input Features (B, T, 256) 
     ↓
