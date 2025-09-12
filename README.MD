@@ -75,7 +75,6 @@ python run_nacasr_ctc.py --epochs 20 --batch-size 16 --lr 1e-3
  
 ```
 
-
 ## Results
 
 ### Wolof ASR Performance
