@@ -153,8 +153,9 @@ class NACASR(nn.Module):
         return x
 
 
-def compute_input_lengths(input_values, in_dim: int = 256):
+def compute_input_lengths(input_values, device ,in_dim: int = 256):
     """Compute actual sequence lengths from input tensor."""
+
     if len(input_values.shape) == 3:
         if input_values.shape[-1] == in_dim:  # (batch, seq_len, in_dim)
             # Count non-zero frames
@@ -164,8 +165,7 @@ def compute_input_lengths(input_values, in_dim: int = 256):
     else:  # 2D input
         lengths = torch.full((input_values.shape[0],), input_values.shape[1])
 
-    return lengths.long()
-
+    return lengths.cpu().long()
 
 # if __name__ == "__main__":
 #     dataloader = get_dataloader("abdouaziiz/new_benchmark_wolof", batch_size=2)
