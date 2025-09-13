@@ -77,7 +77,7 @@ class TextTransform:
         ds = load_dataset(path_or_name, split=split)
         ds = ds.cast_column("audio", Audio())
         self.vocab = " "
-        for item in ds["train"]["transcription"]:
+        for item in ds["transcription"]:
             self.vocab += item.lower() + " "
         self.vocab = set(self.vocab)
         self.vocab = sorted(self.vocab)
@@ -163,10 +163,10 @@ def _collate_fn(batch):
     return {"input_values": data, "labels": labels}
 
 
-def get_dataloader(path_or_name, batch_size=8, shuffle=True, num_workers=0):
+def get_dataloader(path_or_name, split , batch_size=8, shuffle=True, num_workers=0):
     try:
 
-        dataset = NACDataset(path_or_name)
+        dataset = NACDataset(path_or_name , split=split)
         return DataLoader(
             dataset,
             batch_size=batch_size,

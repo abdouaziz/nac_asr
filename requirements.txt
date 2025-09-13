@@ -1,0 +1,5 @@
+evaluate
+vector-quantize-pytorch
+datasets[audio]
+torch 
+torchvision

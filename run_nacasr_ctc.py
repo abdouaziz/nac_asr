@@ -90,14 +90,14 @@ def main():
 
         logger.info("Loading datasets...")
         train_dataloader = get_dataloader(
-            dataset_path=args.path_or_name,
+            path_or_name=args.path_or_name,
             split="train",
             batch_size=args.batch_size,
             num_workers=args.num_workers,
         )
 
         eval_dataloader = get_dataloader(
-            dataset_path=args.path_or_name,
+            path_or_name=args.path_or_name,
             split="validation",
             batch_size=args.batch_size,
             num_workers=args.num_workers,
@@ -115,24 +115,6 @@ def main():
         logger.info(f"Trainable parameters: {trainable_params:,}")
 
         model.to(device)
-        model.eval()
-
-        try:
-            sample_batch = next(iter(train_dataloader))
-            input_values = sample_batch["input_values"].to(device)
-            labels = sample_batch["labels"].to(device)
-
-            logger.info(f"Sample input shape: {input_values.shape}")
-            logger.info(f"Sample labels shape: {labels.shape}")
-
-            with torch.no_grad():
-                outputs = model(input_values)
-                logger.info(f"Model output shape: {outputs.shape}")
-
-        except Exception as e:
-            logger.error(f"Error during model testing: {str(e)}")
-            raise
-
         model.train()
 
         # Start full training
