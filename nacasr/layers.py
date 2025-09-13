@@ -164,8 +164,13 @@ def compute_input_lengths(input_values, device ,in_dim: int = 256):
             lengths = (input_values.abs().sum(1) > 0).sum(-1)
     else:  # 2D input
         lengths = torch.full((input_values.shape[0],), input_values.shape[1])
-
-    return lengths.cpu().long()
+    
+    device_str = str(device).lower()
+    
+    if "cuda" in device_str:
+        return lengths.cpu().long()
+    else:
+        return lengths.long()
 
 # if __name__ == "__main__":
 #     dataloader = get_dataloader("abdouaziiz/new_benchmark_wolof", batch_size=2)
